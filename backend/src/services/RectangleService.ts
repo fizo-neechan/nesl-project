@@ -15,19 +15,16 @@ export class RectangleService {
       // Validation
       const validationError = this.validateRectangleData(rectangleData);
       if (validationError) {
-        console.log(`🔧 Service: Validation failed for rectangle creation: ${validationError}`);
         return { success: false, error: validationError };
       }
 
       // Check if rectangle with this ID already exists
       const existing = await this.rectangleRepository.findById(rectangleData.id);
       if (existing) {
-        console.log(`🔧 Service: Rectangle with ID ${rectangleData.id} already exists`);
         return { success: false, error: `Rectangle with ID ${rectangleData.id} already exists` };
       }
 
       const rectangle = await this.rectangleRepository.create(rectangleData);
-      console.log(`🔧 Service: Successfully created rectangle ${rectangle.id}`);
 
       return { success: true, data: rectangle };
     } catch (error) {
@@ -39,7 +36,6 @@ export class RectangleService {
   async getAllRectangles(): Promise<ServiceResponse<Rectangle[]>> {
     try {
       const rectangles = await this.rectangleRepository.findAll();
-      console.log(`🔧 Service: Retrieved ${rectangles.length} rectangles`);
 
       return { success: true, data: rectangles };
     } catch (error) {
@@ -52,7 +48,6 @@ export class RectangleService {
     try {
       // Validation
       if (!this.isValidPosition(positionData.x, positionData.y)) {
-        console.log(`🔧 Service: Invalid position data for rectangle ${positionData.id}`);
         return { success: false, error: 'Invalid position coordinates' };
       }
 
@@ -62,11 +57,9 @@ export class RectangleService {
       );
 
       if (!updatedRectangle) {
-        console.log(`🔧 Service: Rectangle ${positionData.id} not found for position update`);
         return { success: false, error: `Rectangle with ID ${positionData.id} not found` };
       }
 
-      console.log(`🔧 Service: Successfully updated position for rectangle ${positionData.id}`);
       return { success: true, data: updatedRectangle };
     } catch (error) {
       console.error('🔧 Service: Error updating rectangle position:', error);
@@ -77,18 +70,15 @@ export class RectangleService {
   async deleteRectangle(rectangleId: string): Promise<ServiceResponse<boolean>> {
     try {
       if (!rectangleId || typeof rectangleId !== 'string') {
-        console.log('🔧 Service: Invalid rectangle ID for deletion');
         return { success: false, error: 'Invalid rectangle ID' };
       }
 
       const deleted = await this.rectangleRepository.delete(rectangleId);
 
       if (!deleted) {
-        console.log(`🔧 Service: Rectangle ${rectangleId} not found for deletion`);
         return { success: false, error: `Rectangle with ID ${rectangleId} not found` };
       }
 
-      console.log(`🔧 Service: Successfully deleted rectangle ${rectangleId}`);
       return { success: true, data: true };
     } catch (error) {
       console.error('🔧 Service: Error deleting rectangle:', error);

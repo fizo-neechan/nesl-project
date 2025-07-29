@@ -52,7 +52,6 @@ export class SocketManager implements ISocketManager {
     }
 
     this.middlewares.push(middleware as any);
-    console.log('🔒 Registered socket middleware');
   }
 
   public start(): void {
@@ -64,7 +63,6 @@ export class SocketManager implements ISocketManager {
     this.setupNamespaces();
     this.isStarted = true;
 
-    console.log(`🚀 Socket Manager started with ${this.namespaces.size} namespace(s)`);
     this.logRegisteredNamespaces();
   }
 
@@ -90,7 +88,6 @@ export class SocketManager implements ISocketManager {
         });
       });
 
-      console.log(`🔌 Set up connection handlers for namespace: ${namespacePath}`);
     }
   }
 
@@ -147,23 +144,18 @@ export class SocketManager implements ISocketManager {
 
     if (excludeSocketId) {
       ioNamespace.except(excludeSocketId).emit(event, data);
-      console.log(`📤 Broadcasted ${event} to ${namespace} (excluding ${excludeSocketId})`);
     } else {
       ioNamespace.emit(event, data);
-      console.log(`📤 Broadcasted ${event} to all clients in ${namespace}`);
     }
   }
 
   public async broadcastToAll(event: string, data: any): Promise<void> {
     this.io.emit(event, data);
-    console.log(`📤 Broadcasted ${event} to all namespaces`);
   }
 
   private logRegisteredNamespaces(): void {
-    console.log('📋 Registered namespaces:');
     for (const [namespacePath, namespaceHandler] of this.namespaces.entries()) {
       const eventCount = namespaceHandler.eventHandlers.size;
-      console.log(`   • ${namespacePath} (${eventCount} event handlers)`);
     }
   }
 

@@ -32,7 +32,6 @@ export abstract class BaseSocketNamespace<
     }
 
     this.eventHandlers.set(handler.eventName, handler);
-    console.log(`🎯 Registered handler for ${this.namespace}/${handler.eventName}`);
   }
 
   public async onConnection(socket: Socket<TClientToServer, TServerToClient>): Promise<void> {
