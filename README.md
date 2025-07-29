@@ -1,4 +1,4 @@
-# Real-time Collaborative Canvas - Take-Home Assignment
+# NESL - Take-Home Assignment
 
 Multi-user rectangle editor with real-time synchronization using Socket.io and React.
 
@@ -67,4 +67,5 @@ frontend/src/
 - Advanced canvas features (undo/redo, shapes)
 
 **Time Investment:** ~2 hours
+
 **Focus:** Scalable architecture over feature quantity
